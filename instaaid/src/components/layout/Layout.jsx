@@ -1,10 +1,12 @@
 import React from "react";
 import Header from "./Header";
+import Footer from "./Footer";
 const Layout = ({ children, title, description, keywords, author }) => {
   return (
     <div className="bg-[#ffffff] min-h-screen">
       <Header />
       <main>{children}</main>
+      <Footer />
     </div>
   );
 };

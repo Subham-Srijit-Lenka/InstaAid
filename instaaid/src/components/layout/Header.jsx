@@ -8,6 +8,9 @@ import {
   XMarkIcon,
   ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
+import { logOut } from "../../redux/Auth/authSlice";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 
 const navigation = [
   { name: "Product", to: "/product" },
@@ -19,6 +22,9 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const [totalProduct, settotalProduct] = useState(0);
+  const user = useSelector((state) => state.auth.user);
+
+  const dispatch = useDispatch();
 
   const linkClasses = (path) =>
     `relative text-sm font-medium tracking-wide transition-colors duration-300 ${
@@ -26,6 +32,11 @@ export default function Header() {
         ? "text-blue-600 border-b-2 border-blue-600"
         : "text-gray-700 hover:text-blue-600"
     }`;
+
+  const handleLogOut = async () => {
+    // await axios.post("/api/v1/auth/logout");
+    dispatch(logOut());
+  };
 
   return (
     <header className="bg-white sticky top-0 z-50 shadow-md">
@@ -50,12 +61,25 @@ export default function Header() {
         </div>
 
         <div className="hidden lg:flex lg:items-center lg:gap-x-6">
-          <Link
-            to="/login"
-            className="text-sm font-semibold text-gray-700 hover:text-blue-600"
-          >
-            Login →
-          </Link>
+          {!user ? (
+            <div>
+              <Link
+                to="/login"
+                className="text-sm font-semibold text-gray-700 hover:text-blue-600"
+              >
+                Login →
+              </Link>
+            </div>
+          ) : (
+            <div>
+              <button
+                className="text-sm font-semibold text-gray-700 hover:text-blue-600"
+                onClick={handleLogOut}
+              >
+                LogOut
+              </button>
+            </div>
+          )}
           <Link
             to="/cart"
             className="relative flex items-center text-gray-700 hover:text-blue-600"
