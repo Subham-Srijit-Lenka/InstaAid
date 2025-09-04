@@ -11,9 +11,10 @@ import {
 import { logOut } from "../../redux/Auth/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const navigation = [
-  { name: "Product", to: "/product" },
+  { name: "Product", to: "/products" },
   { name: "FastAid", to: "/chatbot" },
   { name: "Contact", to: "/contact" },
 ];
@@ -23,7 +24,7 @@ export default function Header() {
   const location = useLocation();
   const [totalProduct, settotalProduct] = useState(0);
   const user = useSelector((state) => state.auth.user);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const linkClasses = (path) =>
@@ -36,6 +37,9 @@ export default function Header() {
   const handleLogOut = async () => {
     // await axios.post("/api/v1/auth/logout");
     dispatch(logOut());
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/login");
   };
 
   return (

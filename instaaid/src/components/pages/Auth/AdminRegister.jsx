@@ -3,15 +3,15 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Layout from "../../layout/Layout";
-import { Link } from "react-router-dom";
 
-const Register = () => {
+const AdminRegister = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [answer, setAnswer] = useState("");
+  const [role, setRole] = useState(1);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -26,6 +26,7 @@ const Register = () => {
         phone,
         address,
         answer,
+        role,
       });
 
       if (res && res.data.success) {
@@ -46,78 +47,79 @@ const Register = () => {
     <Layout>
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md">
-          <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
+          <h2 className="text-2xl font-bold text-center mb-6">
+            Admin Register
+          </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter Your Name"
-              autoComplete="name"
               required
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full px-4 py-2 border rounded-lg"
             />
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter Your Email"
-              autoComplete="email"
               required
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full px-4 py-2 border rounded-lg"
             />
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter Your Password"
-              autoComplete="new-password"
               required
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full px-4 py-2 border rounded-lg"
             />
             <input
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Enter Your Phone"
-              autoComplete="tel"
               required
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full px-4 py-2 border rounded-lg"
             />
             <input
               type="text"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               placeholder="Enter Your Address"
-              autoComplete="street-address"
               required
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full px-4 py-2 border rounded-lg"
             />
             <input
               type="text"
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
               placeholder="What is your favourite sport?"
-              autoComplete="off"
               required
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full px-4 py-2 border rounded-lg"
             />
+
+            <select
+              value={role}
+              onChange={(e) => setRole(Number(e.target.value))}
+              className="w-full border p-2 rounded-lg"
+            >
+              <option value={0}>User</option>
+              <option value={1}>Seller</option>
+            </select>
+
             <button
               type="submit"
               disabled={loading}
               className={`w-full py-2 rounded-lg transition ${
                 loading
                   ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-green-600 hover:bg-green-700 text-white"
+                  : "bg-blue-600 hover:bg-blue-700 text-white"
               }`}
             >
               {loading ? "Registering..." : "Register"}
             </button>
-            <Link to="/admin-register">
-              <button className=" w-full py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white">
-                sign Up as Seller
-              </button>
-            </Link>
           </form>
         </div>
       </div>
@@ -125,4 +127,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default AdminRegister;
